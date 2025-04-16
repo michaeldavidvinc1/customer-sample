@@ -34,4 +34,11 @@ public class HomeController {
         model.addAttribute("customerList", customerList);
         return "home";
     }
+
+    @GetMapping("create")
+    public String create(Model model) {
+        Customer customer = new Customer();
+        model.addAttribute("customer", customer);
+        return "create";
+    }
 }
