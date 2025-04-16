@@ -87,4 +87,11 @@ public class HomeController {
         return "show";
     }
 
+    @GetMapping("customer/{id}/edit")
+    public String edit(@PathVariable long id, Model model) {
+        Customer customer = customerService.findById(id).orElse(null);
+        model.addAttribute("customer", customer);
+        return "create";
+    }
+
 }
