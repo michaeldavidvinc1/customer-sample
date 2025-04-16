@@ -2,6 +2,7 @@ package id.my.hendisantika.thymeleafsample2.service;
 
 import id.my.hendisantika.thymeleafsample2.model.Customer;
 import id.my.hendisantika.thymeleafsample2.repository.CustomerRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,8 +20,9 @@ import java.util.Optional;
  * To change this template use File | Settings | File Templates.
  */
 @Service
+@RequiredArgsConstructor
 public class CustomerService {
-    private CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
 
     public List<Customer> getAllCustomers() {
         return (List<Customer>) customerRepository.findAll();

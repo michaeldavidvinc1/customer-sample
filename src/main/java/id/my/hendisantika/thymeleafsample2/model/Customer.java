@@ -39,12 +39,12 @@ public class Customer {
 
     @Column(name = "first_name")
     @NotEmpty(message = "First Name is required")
-    @Size(min = 5, message = "First name should be at least 5 characters")
+    @Size(min = 3, message = "First name should be at least 5 characters")
     private String firstName;
 
     @Column(name = "last_name")
     @NotEmpty(message = "Last Name is required")
-    @Size(min = 5, message = "Last name should be at least 5 characters")
+    @Size(min = 3, message = "Last name should be at least 5 characters")
     private String lastName;
 
     @Column(name = "email")
