@@ -1,7 +1,10 @@
 package id.my.hendisantika.thymeleafsample2.service;
 
+import id.my.hendisantika.thymeleafsample2.model.Customer;
 import id.my.hendisantika.thymeleafsample2.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -18,4 +21,7 @@ import org.springframework.stereotype.Service;
 public class CustomerService {
     private CustomerRepository customerRepository;
 
+    public List<Customer> getAllCustomers() {
+        return (List<Customer>) customerRepository.findAll();
+    }
 }
