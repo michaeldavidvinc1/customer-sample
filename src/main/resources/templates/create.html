@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html class="h-full bg-gray-100" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${customer.id == null ? 'Add new customer':'Edit '+customer.firstName+' '+customer.lastName}"></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+</head>
+<body class="h-full">
+
+<div class="min-h-full">
+    <nav class="bg-gray-800">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center">
+                    <div class="shrink-0">
+                        <img alt="Your Company" class="size-8"
+                             src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500">
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                            <a aria-current="page" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+                               th:href="@{/}">Dashboard</a>
+                            <a class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                               href="#">Team</a>
+                            <a class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                               href="#">Projects</a>
+                            <a class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                               href="#">Calendar</a>
+                            <a class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                               href="#">Reports</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="bg-white shadow">
+        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <h1 class="text-3xl font-bold tracking-tight text-gray-900"
+                th:text="${customer.id == null ? 'Add new Customer':'Edit '+customer.firstName+' '+customer.lastName}"></h1>
+        </div>
+    </header>
+    <main>
+        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <div class="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
+                <div aria-hidden="true"
+                     class="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">
+                    <div class="relative left-1/2 -z-10 aspect-[1155/678] w-[36.125rem] max-w-none -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-40rem)] sm:w-[72.1875rem]"
+                         style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+                </div>
+                <div class="mx-auto max-w-2xl text-center">
+                    <h2 class="text-balance text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl"
+                        th:text="${customer.id == null ? 'Add new customer':'Edit '+customer.firstName+' '+customer.lastName}"></h2>
+                    <p class="mt-2 text-lg/8 text-gray-600">Please fill up the Customer Information</p>
+                </div>
+                <form class="mx-auto mt-16 max-w-xl sm:mt-20" enctype="multipart/form-data" role="form" th:action="@{/save}"
+                      th:method="POST"
+                      th:object="${customer}">
+                    <input th:field="${customer.id}" type="hidden">
+                    <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+                        <div>
+                            <label class="block text-sm/6 font-semibold text-gray-900" for="firstName">First
+                                name</label>
+                            <div class="mt-2.5">
+                                <input class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6" th:field="${customer.firstName}"
+                                       type="text">
+                                <div class="text-red-600 text-sm mt-1" th:errors="*{firstName}"
+                                     th:if="${#fields.hasErrors('firstName')}"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm/6 font-semibold text-gray-900" for="lastName">Last name</label>
+                            <div class="mt-2.5">
+                                <input class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6" th:field="${customer.lastName}"
+                                       type="text">
+                                <div class="text-red-600 text-sm mt-1" th:errors="*{lastName}"
+                                     th:if="${#fields.hasErrors('lastName')}"></div>
+                            </div>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block text-sm/6 font-semibold text-gray-900" for="email">Email</label>
+                            <div class="mt-2.5">
+                                <input class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6" th:field="${customer.email}"
+                                       type="email">
+                                <div class="text-red-600 text-sm mt-1" th:errors="*{email}"
+                                     th:if="${#fields.hasErrors('email')}"></div>
+                            </div>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block text-sm/6 font-semibold text-gray-900" for="phone">Phone number</label>
+                            <div class="mt-2.5">
+                                <input class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6" th:field="${customer.phone}"
+                                       type="text">
+                            </div>
+                        </div>
+
+
+                        <div>
+                            <label class="block text-sm/6 font-semibold text-gray-900" for="fileImage">Image</label>
+                            <div class="mt-2.5">
+                                <input accept="image/png, image/jpeg" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6" id="fileImage" name="image"
+                                       type="file">
+                                <p class="hidden text-red-600 text-sm mt-1" id="imageError">File size exceeds 1MB.
+                                    Please upload a smaller file.</p>
+                            </div>
+                        </div>
+                        <div>
+                            <img alt="Photo preview" class="h-24 w-auto border p-1 rounded-md"
+                                 id="thumbnail" th:src="@{/{image}(image=${customer.photosImagePath})}">
+                        </div>
+
+
+                    </div>
+                    <div class="mt-10">
+                        <button class="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                type="submit">
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </main>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#fileImage').change(function () {
+
+            fileSize = this.files[0].size;
+
+            if (fileSize > 1048576) {
+                $('#imageError').removeClass("hidden")
+            } else {
+                $('#imageError').addClass("hidden")
+                showImageThumbnail(this);
+            }
+        });
+    });
+
+    function showImageThumbnail(fileInput) {
+        var file = fileInput.files[0];
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('#thumbnail').attr("src", e.target.result);
+        };
+        reader.readAsDataURL(file);
+
+    }
+</script>
+
+</body>
+</html>
