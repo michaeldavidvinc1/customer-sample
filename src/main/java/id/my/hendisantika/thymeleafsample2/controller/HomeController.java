@@ -94,4 +94,10 @@ public class HomeController {
         return "create";
     }
 
+    @GetMapping("customer/{id}/delete")
+    public String delete(@PathVariable long id, Model model, RedirectAttributes redirectAttributes) {
+        customerService.deleteById(id);
+        redirectAttributes.addFlashAttribute("message", "Customer deleted successfully");
+        return "redirect:/";
+    }
 }
