@@ -74,17 +74,26 @@ cd spring-boot-thymeleaf-sample2
 
 ### Screenshots
 
-Home Page
+#### Home Page
 Displays the list of customers with options to view, edit, or delete.
 
-Add Customer
+![Home Page](img/list.png "list page")
+
+#### Add Customer
 Form to add a new customer.
 
-View Customer
+![Add Customer](img/home.png "Add Customer")
+
+![Add Customer](img/add.png "Add Customer")
+
+#### View Customer
 Displays detailed information about a specific customer.
 
-License
+![View Customer](img/edit.png "View Customer")
+
+### License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-Author
+### Author
 Developed by Hendi Santika.
+https://s.id/hendisantika
