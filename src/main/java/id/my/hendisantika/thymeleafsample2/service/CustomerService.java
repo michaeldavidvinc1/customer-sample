@@ -5,6 +5,7 @@ import id.my.hendisantika.thymeleafsample2.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by IntelliJ IDEA.
@@ -23,5 +24,9 @@ public class CustomerService {
 
     public List<Customer> getAllCustomers() {
         return (List<Customer>) customerRepository.findAll();
+    }
+
+    public Optional<Customer> findById(Long id) {
+        return customerRepository.findById(id);
     }
 }
