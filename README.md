@@ -9,15 +9,14 @@ operations.
 - **Spring Boot** for backend development.
 - **Thymeleaf** for server-side rendering of HTML templates.
 - **Tailwind CSS** for responsive and modern UI design.
-- **MySQL** as the database for storing customer data.
-- **Docker Compose** for containerized MySQL setup.
+- **H2** in-memory database for storing customer data.
+- **Docker Compose** for containerized application setup.
 
 ## Prerequisites
 
 - Java 17 or higher
 - Maven 3.8+
-- Docker (for running MySQL)
-- MySQL 8 or higher (if not using Docker)
+- Docker (optional, for containerized deployment)
 
 ## Getting Started
 
@@ -28,23 +27,26 @@ git clone https://github.com/hendisantika/spring-boot-thymeleaf-sample2.git
 cd spring-boot-thymeleaf-sample2
 ```
 
-2. Set Up the Database
-   Using Docker Compose
-   Run the following command to start a MySQL container:
-    ```shell
-    docker-compose up -d
-    ```
-
-   Manual Setup
-   If you prefer to set up MySQL manually:
-   Create a database named sampledb.
-   Update the database connection details in `src/main/resources/application.yml.`
+2. Database Setup
+   The application uses H2 in-memory database by default, so no additional setup is required.
+   The database configuration can be found in `src/main/resources/application.yml`.
 
 3. Build and Run the Application
+
+   **Option 1: Run with Maven**
     ```shell
     mvn clean install
     mvn clean spring-boot:run
     ```
+
+   **Option 2: Run with Docker**
+    ```shell
+    mvn clean package
+    docker-compose up -d
+    ```
+
+   When running with Docker, the `customer-photos` directory is mounted as a volume to persist photos outside the
+   container. This ensures that uploaded customer photos are accessible from the web application.
 
    The application will be available at http://localhost:8080.
 
@@ -62,7 +64,7 @@ cd spring-boot-thymeleaf-sample2
 2. Spring Boot 3.x
 3. Thymeleaf
 4. Tailwind CSS
-5. MySQL
+5. H2 Database
 6. Docker Compose
 
 ### Project Structure
@@ -70,7 +72,8 @@ cd spring-boot-thymeleaf-sample2
 `src/main/java` - Contains the Java source code.
 `src/main/resources/templates` - Thymeleaf templates for the UI.
 `src/main/resources/application.yml` - Configuration file for the application.
-`docker-compose.yaml` - Docker Compose configuration for MySQL.
+`Dockerfile` - Docker configuration for building the application image.
+`docker-compose.yml` - Docker Compose configuration for running the application with volume mounts.
 
 ### Screenshots
 
