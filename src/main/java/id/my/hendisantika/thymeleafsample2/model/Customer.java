@@ -59,5 +59,9 @@ public class Customer {
     private String photo;
 
     @Transient
-    private String photosImagePath;
+    public String getPhotosImagePath() {
+        if (photo == null || id == null) return null;
+
+        return "/customer-photos/" + id + "/" + photo;
+    }
 }
