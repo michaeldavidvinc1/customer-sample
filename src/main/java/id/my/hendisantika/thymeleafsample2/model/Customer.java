@@ -13,7 +13,6 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Transient;
 
 /**
  * Created by IntelliJ IDEA.
@@ -26,9 +25,9 @@ import org.springframework.data.annotation.Transient;
  * Time: 07.15
  * To change this template use File | Settings | File Templates.
  */
-@Entity(name = "Customer")
-@Table(name = "customer")
 @Data
+@Entity
+@Table(name = "customer")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Customer {
@@ -54,14 +53,4 @@ public class Customer {
 
     @Column(name = "phone")
     private String phone;
-
-    @Column(name = "photo")
-    private String photo;
-
-    @Transient
-    public String getPhotosImagePath() {
-        if (photo == null || id == null) return null;
-
-        return "/customer-photos/" + id + "/" + photo;
-    }
 }

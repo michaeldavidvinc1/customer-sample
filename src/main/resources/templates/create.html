@@ -97,23 +97,6 @@
                                        type="text">
                             </div>
                         </div>
-
-
-                        <div>
-                            <label class="block text-sm/6 font-semibold text-gray-900" for="fileImage">Image</label>
-                            <div class="mt-2.5">
-                                <input accept="image/png, image/jpeg" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6" id="fileImage" name="image"
-                                       type="file">
-                                <p class="hidden text-red-600 text-sm mt-1" id="imageError">File size exceeds 1MB.
-                                    Please upload a smaller file.</p>
-                            </div>
-                        </div>
-                        <div>
-                            <img alt="Photo preview" class="h-24 w-auto border p-1 rounded-md"
-                                 id="thumbnail" th:src="@{/{image}(image=${customer.photosImagePath})}">
-                        </div>
-
-
                     </div>
                     <div class="mt-10">
                         <button class="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -127,31 +110,5 @@
         </div>
     </main>
 </div>
-<script>
-    $(document).ready(function () {
-        $('#fileImage').change(function () {
-
-            fileSize = this.files[0].size;
-
-            if (fileSize > 1048576) {
-                $('#imageError').removeClass("hidden")
-            } else {
-                $('#imageError').addClass("hidden")
-                showImageThumbnail(this);
-            }
-        });
-    });
-
-    function showImageThumbnail(fileInput) {
-        var file = fileInput.files[0];
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            $('#thumbnail').attr("src", e.target.result);
-        };
-        reader.readAsDataURL(file);
-
-    }
-</script>
-
 </body>
 </html>

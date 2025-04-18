@@ -2,19 +2,16 @@ package id.my.hendisantika.thymeleafsample2.controller;
 
 import id.my.hendisantika.thymeleafsample2.model.Customer;
 import id.my.hendisantika.thymeleafsample2.service.CustomerService;
-import id.my.hendisantika.thymeleafsample2.service.FileUploadService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
@@ -57,23 +54,12 @@ public class HomeController {
     public String save(
             @Valid @ModelAttribute("customer") Customer customer,
             BindingResult bindingResult, Model model,
-            RedirectAttributes redirectAttributes,
-            @RequestParam("image") MultipartFile multipartFile) throws IOException {
+            RedirectAttributes redirectAttributes) throws IOException {
 
         if (bindingResult.hasErrors()) {
             return "/create";
         }
-
-        if (!multipartFile.isEmpty()) {
-            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-
-            customer.setPhoto(fileName);
-
-            Customer savedCustomer = customerService.save(customer);
-
-            String uploadDir = "customer-photos/" + savedCustomer.getId();
-            FileUploadService.saveFile(uploadDir, fileName, multipartFile);
-        }
+        customerService.save(customer);
         redirectAttributes.addFlashAttribute("message", "Customer saved successfully");
         return "redirect:/";
     }

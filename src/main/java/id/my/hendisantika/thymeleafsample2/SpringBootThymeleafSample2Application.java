@@ -25,35 +25,30 @@ public class SpringBootThymeleafSample2Application {
                 customer1.setLastName("Doe");
                 customer1.setEmail("john.doe@example.com");
                 customer1.setPhone("123-456-7890");
-                customer1.setPhoto("Jetbrains.jpeg");
 
                 Customer customer2 = new Customer();
                 customer2.setFirstName("Jane");
                 customer2.setLastName("Smith");
                 customer2.setEmail("jane.smith@example.com");
                 customer2.setPhone("987-654-3210");
-                customer2.setPhoto("avatar-default.jpg");
 
                 Customer customer3 = new Customer();
                 customer3.setFirstName("Michael");
                 customer3.setLastName("Johnson");
                 customer3.setEmail("michael.johnson@example.com");
                 customer3.setPhone("555-123-4567");
-                customer3.setPhoto("avatar-default.jpg");
 
                 Customer customer4 = new Customer();
                 customer4.setFirstName("Emily");
                 customer4.setLastName("Williams");
                 customer4.setEmail("emily.williams@example.com");
                 customer4.setPhone("444-555-6666");
-                customer4.setPhoto("avatar-default.jpg");
 
                 Customer customer5 = new Customer();
                 customer5.setFirstName("David");
                 customer5.setLastName("Brown");
                 customer5.setEmail("david.brown@example.com");
                 customer5.setPhone("777-888-9999");
-                customer5.setPhoto("avatar-default.jpg");
 
                 // Save customers to database
                 customerRepository.save(customer1);

@@ -53,34 +53,4 @@ class SpringBootThymeleafSample2ApplicationTests {
 
         assertTrue(foundTestUser, "Should have found the test user");
     }
-
-    @Test
-    void testCustomerPhotoInitialization() {
-        // Verify that the initialized customers have photos set
-        List<Customer> customers = (List<Customer>) customerRepository.findAll();
-
-        // Find John Doe (customer1) who should have Jetbrains.jpeg as photo
-        boolean foundJohnDoe = false;
-        for (Customer customer : customers) {
-            if ("John".equals(customer.getFirstName()) && "Doe".equals(customer.getLastName())) {
-                foundJohnDoe = true;
-                assertEquals("Jetbrains.jpeg", customer.getPhoto(), "John Doe should have Jetbrains.jpeg as photo");
-                break;
-            }
-        }
-
-        assertTrue(foundJohnDoe, "Should have found John Doe with initialized photo");
-
-        // Verify other customers have default avatar
-        boolean foundOtherCustomersWithDefaultPhoto = false;
-        for (Customer customer : customers) {
-            if ("Jane".equals(customer.getFirstName()) && "Smith".equals(customer.getLastName())) {
-                foundOtherCustomersWithDefaultPhoto = true;
-                assertEquals("avatar-default.jpg", customer.getPhoto(), "Jane Smith should have default avatar as photo");
-                break;
-            }
-        }
-
-        assertTrue(foundOtherCustomersWithDefaultPhoto, "Should have found Jane Smith with default photo");
-    }
 }
