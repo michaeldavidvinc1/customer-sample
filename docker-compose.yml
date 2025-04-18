@@ -1,0 +1,9 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./customer-photos:/app/customer-photos
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
