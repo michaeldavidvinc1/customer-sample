@@ -43,7 +43,7 @@ jobs:
         mvn clean install jib:build -Djib.from-platforms="linux/amd64,linux/arm64" -Djib.to.image=registry.cloudraya.com/${{ secrets.CLOUDRAYA_USERNAME }}/customer-app:${{ github.run_number }} -Djib.to.auth.username=${{ secrets.CLOUDRAYA_USERNAME }} -Djib.to.auth.password=${{ secrets.CLOUDRAYA_PASSWORD }}
       #        docker build -t registry.cloudraya.com/${{ secrets.CLOUDRAYA_USERNAME }}/customer-app:${{ github.run_number }} .
       #        docker push registry.cloudraya.com/${{ secrets.CLOUDRAYA_USERNAME }}/customer-app:${{ github.run_number }}
-      
+
 
       # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
@@ -153,3 +153,55 @@ jobs:
         run: |
           set -e
           ./deploy-cloudraya.sh
+
+  deploy-to-k8s:
+    needs: build
+    name: Deploy to Kubernetes
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Configure kubectl
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
+          chmod 600 $HOME/.kube/config
+
+      - name: Deploy to Kubernetes
+        env:
+          REGISTRY: registry.cloudraya.com/${{ secrets.CLOUDRAYA_USERNAME }}
+          TAG: ${{ github.run_number }}
+          NAMESPACE: ${{ vars.K8S_NAMESPACE || 'default' }}
+          USE_PERSISTENT: ${{ vars.K8S_USE_PERSISTENT || 'false' }}
+          USE_INGRESS: ${{ vars.K8S_USE_INGRESS || 'false' }}
+          DOMAIN: ${{ vars.K8S_DOMAIN || '' }}
+        run: |
+          chmod +x deploy-to-k8s.sh
+
+          # Skip build since we already built and pushed the image in the build job
+          DEPLOY_ARGS="--registry $REGISTRY --tag $TAG --namespace $NAMESPACE --skip-build"
+
+          # Add optional arguments based on environment variables
+          if [ "$USE_PERSISTENT" = "true" ]; then
+            DEPLOY_ARGS="$DEPLOY_ARGS --persistent"
+          fi
+
+          if [ "$USE_INGRESS" = "true" ]; then
+            DEPLOY_ARGS="$DEPLOY_ARGS --ingress --domain $DOMAIN"
+          fi
+
+          # Run the deployment script
+          ./deploy-to-k8s.sh $DEPLOY_ARGS
+
+      - name: Verify deployment
+        run: |
+          kubectl get pods -n ${{ vars.K8S_NAMESPACE || 'default' }} -l app=customer-app
+          kubectl get svc -n ${{ vars.K8S_NAMESPACE || 'default' }} -l app=customer-app
+          if [ "${{ vars.K8S_USE_INGRESS || 'false' }}" = "true" ]; then
+            kubectl get ingress -n ${{ vars.K8S_NAMESPACE || 'default' }}
+          fi

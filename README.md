@@ -71,6 +71,14 @@ cd spring-boot-thymeleaf-sample2
    For detailed instructions on deploying to a Kubernetes cluster in a VPS environment,
    see [KUBERNETES_DEPLOYMENT.md](KUBERNETES_DEPLOYMENT.md).
 
+   **Option 4: Continuous Deployment with GitHub Actions**
+
+   This project includes a GitHub Actions workflow that automatically builds, pushes, and deploys the application to a
+   Kubernetes cluster when changes are pushed to the main branch.
+
+   For detailed instructions on setting up continuous deployment to Kubernetes with GitHub Actions,
+   see [GITHUB_ACTIONS_K8S_DEPLOYMENT.md](GITHUB_ACTIONS_K8S_DEPLOYMENT.md).
+
 ### Application Endpoints
 
 1. Home Page: `/` - Displays the list of customers.
