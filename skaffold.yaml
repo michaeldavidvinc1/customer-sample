@@ -1,0 +1,31 @@
+apiVersion: skaffold/v2beta29
+kind: Config
+metadata:
+  name: customer-app
+build:
+  artifacts:
+    - image: registry.cloudraya.com/ir-cr-hendi-144/customer-app
+      context: .
+      jib:
+        type: maven
+deploy:
+  kubectl:
+    manifests:
+      - k8s/deployment.yaml
+      - k8s/service.yaml
+profiles:
+  - name: dev
+    activation:
+      - command: dev
+    build:
+      artifacts:
+        - image: registry.cloudraya.com/ir-cr-hendi-144/customer-app
+          context: .
+          jib:
+            type: maven
+          sync:
+            manual:
+              - src: 'src/main/java/**/*.java'
+                dest: .
+              - src: 'src/main/resources/**/*'
+                dest: .
