@@ -20,11 +20,11 @@ function show_usage {
 
 # Default values
 REGISTRY="registry.cloudraya.com/ir-cr-hendi-144"
-TAG="latest"
+TAG="23"
 NAMESPACE="default"
 USE_PERSISTENT=false
 USE_INGRESS=false
-DOMAIN=""
+DOMAIN="k8s.jvm.my.id"
 SKIP_BUILD=false
 
 # Parse command line arguments

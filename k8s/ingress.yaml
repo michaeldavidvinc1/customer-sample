@@ -11,7 +11,7 @@ metadata:
     # nginx.ingress.kubernetes.io/enable-cors: "true"
 spec:
   rules:
-    - host: customer-app.yourdomain.com  # Replace with your actual domain
+    - host: k8s.jvm.my.id
       http:
         paths:
           - path: /
@@ -21,8 +21,7 @@ spec:
                 name: customer-app
                 port:
                   number: 8081
-  # Uncomment to add TLS support
-  # tls:
-  # - hosts:
-  #   - customer-app.yourdomain.com
-  #   secretName: customer-app-tls
+  tls:
+    - hosts:
+        - k8s.jvm.my.id
+      secretName: customer-app-tls
