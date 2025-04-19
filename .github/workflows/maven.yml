@@ -35,7 +35,7 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Build and push
-      run: mvn clean install jib:build -Djib.from-platforms="linux/amd64,linux/arm64" -Djib.to.image=hendisantika/customer-app:${{ github.run_number }} -Djib.to.auth.username=${{ secrets.DOCKERHUB_USERNAME }} -Djib.to.auth.password=${{ secrets.DOCKERHUB_TOKEN }}
+      run: mvn clean install jib:build -Djib.from-platforms="linux/amd64,linux/arm64" -Djib.to.image=hendisantika/customer:${{ github.run_number }} -Djib.to.auth.username=${{ secrets.DOCKERHUB_USERNAME }} -Djib.to.auth.password=${{ secrets.DOCKERHUB_TOKEN }}
 
       # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
