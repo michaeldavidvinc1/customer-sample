@@ -77,6 +77,7 @@ jobs:
           SERVER_HOST: ${{ vars.SSH_HOST }}
           SERVER_PORT: ${{ vars.SSH_PORT }}
           SERVER_USERNAME: ${{ vars.SSH_USERNAME }}
+          IMAGE_NAME: customer
           IMAGE_TAG: ${{ github.run_number }}
           CONTAINER_NAME: customer-app
 
@@ -86,6 +87,7 @@ jobs:
 
         run: |
           echo CONTAINER_NAME=$CONTAINER_NAME >> .env
+          echo IMAGE_NAME=$IMAGE_NAME >> .env
           echo IMAGE_TAG=$IMAGE_TAG >> .env
           echo APP_SERVER_PORT=$APP_SERVER_PORT >> .env
           echo APP_ENVIRONMENT=$APP_ENVIRONMENT >> .env

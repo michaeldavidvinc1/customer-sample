@@ -14,7 +14,7 @@ if [ "$(docker ps -q -f name=$CONTAINER_NAME)" ]; then
     docker rm $CONTAINER_NAME
 fi
 
-docker run -d --restart unless-stopped --platform linux/amd64 -p $APP_SERVER_PORT:$APP_SERVER_PORT --env-file .env --name $CONTAINER_NAME  hendisantika/$CONTAINER_NAME:$IMAGE_TAG
+docker run -d --restart unless-stopped --platform linux/amd64 -p $APP_SERVER_PORT:$APP_SERVER_PORT --env-file .env --name $CONTAINER_NAME  hendisantika/$IMAGE_NAME:$IMAGE_TAG
 exit
 ENDSSH
 
