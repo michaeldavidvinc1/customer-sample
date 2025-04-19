@@ -53,4 +53,51 @@ class SpringBootThymeleafSample2ApplicationTests {
 
         assertTrue(foundTestUser, "Should have found the test user");
     }
+
+//    @Test
+//    void testCustomerPhotoInitialization() {
+//        // Create and save test customers with photos
+//        Customer johnDoe = new Customer();
+//        johnDoe.setFirstName("John");
+//        johnDoe.setLastName("Doe");
+//        johnDoe.setEmail("john.doe@example.com");
+//        johnDoe.setPhone("123-456-7890");
+//        johnDoe.setPhoto("Jetbrains.jpeg");
+//        customerRepository.save(johnDoe);
+//
+//        Customer janeSmith = new Customer();
+//        janeSmith.setFirstName("Jane");
+//        janeSmith.setLastName("Smith");
+//        janeSmith.setEmail("jane.smith@example.com");
+//        janeSmith.setPhone("987-654-3210");
+//        janeSmith.setPhoto("avatar-default.jpg");
+//        customerRepository.save(janeSmith);
+//
+//        // Verify that the customers have photos set
+//        List<Customer> customers = (List<Customer>) customerRepository.findAll();
+//
+//        // Find John Doe who should have Jetbrains.jpeg as photo
+//        boolean foundJohnDoe = false;
+//        for (Customer customer : customers) {
+//            if ("John".equals(customer.getFirstName()) && "Doe".equals(customer.getLastName())) {
+//                foundJohnDoe = true;
+//                assertEquals("Jetbrains.jpeg", customer.getPhoto(), "John Doe should have Jetbrains.jpeg as photo");
+//                break;
+//            }
+//        }
+//
+//        assertTrue(foundJohnDoe, "Should have found John Doe with photo");
+//
+//        // Verify Jane Smith has default avatar
+//        boolean foundJaneSmith = false;
+//        for (Customer customer : customers) {
+//            if ("Jane".equals(customer.getFirstName()) && "Smith".equals(customer.getLastName())) {
+//                foundJaneSmith = true;
+//                assertEquals("avatar-default.jpg", customer.getPhoto(), "Jane Smith should have default avatar as photo");
+//                break;
+//            }
+//        }
+//
+//        assertTrue(foundJaneSmith, "Should have found Jane Smith with default photo");
+//    }
 }

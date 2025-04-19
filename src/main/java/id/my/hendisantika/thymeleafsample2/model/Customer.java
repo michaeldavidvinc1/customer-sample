@@ -53,4 +53,13 @@ public class Customer {
 
     @Column(name = "phone")
     private String phone;
+
+    @Column(name = "photo")
+    private String photo;
+
+    public String getPhotosImagePath() {
+        if (photo == null || id == null) return null;
+
+        return "/customer-photos/" + id + "/" + photo;
+    }
 }
