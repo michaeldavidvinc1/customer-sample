@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: customer-app-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # Add other annotations as needed for your ingress controller
+    # For example, to enable SSL:
+    # cert-manager.io/cluster-issuer: letsencrypt-prod
+    # To enable CORS:
+    # nginx.ingress.kubernetes.io/enable-cors: "true"
+spec:
+  rules:
+    - host: customer-app.yourdomain.com  # Replace with your actual domain
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: customer-app
+                port:
+                  number: 8081
+  # Uncomment to add TLS support
+  # tls:
+  # - hosts:
+  #   - customer-app.yourdomain.com
+  #   secretName: customer-app-tls

@@ -68,6 +68,9 @@ cd spring-boot-thymeleaf-sample2
    The application will be available at http://localhost:8081 (or through your Kubernetes cluster's ingress if
    configured).
 
+   For detailed instructions on deploying to a Kubernetes cluster in a VPS environment,
+   see [KUBERNETES_DEPLOYMENT.md](KUBERNETES_DEPLOYMENT.md).
+
 ### Application Endpoints
 
 1. Home Page: `/` - Displays the list of customers.
