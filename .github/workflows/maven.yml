@@ -96,10 +96,10 @@ jobs:
         with:
           host: ${{ vars.SSH_HOST }}
           username: ${{ vars.SSH_USERNAME }}
-          key: ${{ vars.SSH_PRIVATE_KEY_VARS }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ vars.SSH_PORT }}
           source: "./.env"  # Path to the file on your runner
-          target: "~/spring-boot-docker-without-docker"  # Target directory on the server
+          target: "~/customer-app"  # Target directory on the server
 
       - name: Run the application
         env:
