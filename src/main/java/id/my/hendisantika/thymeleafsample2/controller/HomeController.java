@@ -35,7 +35,7 @@ public class HomeController {
 
     private final CustomerService customerService;
 
-    @GetMapping("/")
+    @GetMapping({"/", "customer"})
     public String home(@RequestParam(value = "name", defaultValue = "") String name, Model model) {
         List<Customer> customerList = customerService.getAllCustomers();
 
@@ -43,14 +43,14 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping("create")
+    @GetMapping("customer/create")
     public String create(Model model) {
         Customer customer = new Customer();
         model.addAttribute("customer", customer);
         return "create";
     }
 
-    @PostMapping("save")
+    @PostMapping("customer/save")
     public String save(
             @Valid @ModelAttribute("customer") Customer customer,
             BindingResult bindingResult, Model model,
