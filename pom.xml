@@ -107,16 +107,17 @@
                         <image>amazoncorretto:21</image>
                     </from>
                     <to>
-                        <image>${project.artifactId}:${project.version}</image>
+                        <image>registry.cloudraya.com/ir-cr-hendi-144/customer-app</image>
                     </to>
                     <container>
                         <ports>
-                            <port>8080</port>
+                            <port>8081</port>
                         </ports>
                         <environment>
                             <SPRING_PROFILES_ACTIVE>prod</SPRING_PROFILES_ACTIVE>
                         </environment>
                         <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+                        <user>1000:1000</user>
                     </container>
                 </configuration>
             </plugin>

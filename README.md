@@ -11,12 +11,15 @@ operations.
 - **Tailwind CSS** for responsive and modern UI design.
 - **H2** in-memory database for storing customer data.
 - **Docker Compose** for containerized application setup.
+- **Kubernetes** and **Skaffold** for cloud-native deployment.
 
 ## Prerequisites
 
 - Java 17 or higher
 - Maven 3.8+
 - Docker (optional, for containerized deployment)
+- Kubernetes cluster (optional, for Kubernetes deployment)
+- Skaffold (optional, for Kubernetes development workflow)
 
 ## Getting Started
 
@@ -48,7 +51,22 @@ cd spring-boot-thymeleaf-sample2
    When running with Docker, the `customer-photos` directory is mounted as a volume to persist photos outside the
    container. This ensures that uploaded customer photos are accessible from the web application.
 
-   The application will be available at http://localhost:8080.
+   **Option 3: Run with Kubernetes and Skaffold**
+    ```shell
+    mvn clean package
+    skaffold run
+    ```
+
+   For development with hot-reload:
+    ```shell
+    skaffold dev
+    ```
+
+   When running with Kubernetes, the application will be deployed to your Kubernetes cluster according to the manifests
+   in the `k8s` directory.
+
+   The application will be available at http://localhost:8081 (or through your Kubernetes cluster's ingress if
+   configured).
 
 ### Application Endpoints
 
@@ -66,6 +84,8 @@ cd spring-boot-thymeleaf-sample2
 4. Tailwind CSS
 5. H2 Database
 6. Docker Compose
+7. Kubernetes
+8. Skaffold
 
 ### Project Structure
 
@@ -74,6 +94,9 @@ cd spring-boot-thymeleaf-sample2
 `src/main/resources/application.yml` - Configuration file for the application.
 `Dockerfile` - Docker configuration for building the application image.
 `docker-compose.yml` - Docker Compose configuration for running the application with volume mounts.
+`k8s/deployment.yaml` - Kubernetes Deployment manifest.
+`k8s/service.yaml` - Kubernetes Service manifest.
+`skaffold.yaml` - Skaffold configuration for Kubernetes development workflow.
 
 ### Screenshots
 
