@@ -58,7 +58,7 @@ jobs:
 
       - name: Create SSH key
         run: |
-          mkdir ~/spring-boot-docker-without-docker
+          mkdir ~/customer-app
           mkdir -p ~/.ssh/
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/private.key
           sudo chmod 600 ~/.ssh/private.key
@@ -67,14 +67,17 @@ jobs:
         shell: bash
         env:
           SERVER_HOST: ${{ vars.SSH_HOST }}
+          SERVER_HOST_CLOUDRAYA: ${{ vars.SSH_HOST_CLOUDRAYA }}
           SERVER_PORT: ${{ vars.SSH_PORT }}
           SERVER_USERNAME: ${{ vars.SSH_USERNAME }}
           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
           SSH_KNOWN_HOSTS: ${{vars.SSH_HOST}}
+          SSH_KNOWN_HOSTS_CLOUDRAYA: ${{vars.SSH_HOST_CLOUDRAYA}}
 
       - name: Set all environment variables
         env:
           SERVER_HOST: ${{ vars.SSH_HOST }}
+          SERVER_HOST_CLOUDRAYA: ${{ vars.SSH_HOST_CLOUDRAYA }}
           SERVER_PORT: ${{ vars.SSH_PORT }}
           SERVER_USERNAME: ${{ vars.SSH_USERNAME }}
           IMAGE_NAME: customer
@@ -103,6 +106,16 @@ jobs:
           source: "./.env"  # Path to the file on your runner
           target: "~/customer-app"  # Target directory on the server
 
+      - name: Copy all environment variables to Cloud Raya
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ vars.SSH_HOST_CLOUDRAYA }}
+          username: ${{ vars.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ vars.SSH_PORT }}
+          source: "./.env"  # Path to the file on your runner
+          target: "~/customer-app"  # Target directory on the server
+
       - name: Run the application
         env:
           SERVER_HOST: ${{ vars.SSH_HOST }}
@@ -117,3 +130,18 @@ jobs:
         run: |
           set -e
           ./deploy.sh
+
+      - name: Run the application in Cloud Raya
+        env:
+          SERVER_HOST: ${{ vars.SSH_HOST_CLOUDRAYA }}
+          SERVER_PORT: ${{ vars.SSH_PORT }}
+          SERVER_USERNAME: ${{ vars.SSH_USERNAME }}
+          IMAGE_TAG: ${{ github.run_number }}
+
+          APP_SERVER_PORT: ${{ vars.APP_SERVER_PORT_DEV }}
+          APP_ENVIRONMENT: ${{ vars.APP_ENVIRONMENT_DEV }}
+          SPRING_PROFILES_ACTIVE: ${{ vars.SPRING_PROFILES_ACTIVE_DEV }}
+
+        run: |
+          set -e
+          ./deploy-cloudraya.sh
