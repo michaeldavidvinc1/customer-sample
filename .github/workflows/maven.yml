@@ -40,3 +40,78 @@ jobs:
       # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
       uses: advanced-security/maven-dependency-submission-action@aeab9f885293af501bae8bdfe88c589528ea5e25
+
+
+  deploy:
+    needs: build
+    name: deploy image
+    runs-on: ubuntu-24.04
+    environment: development
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Add Server key
+        run: |
+          touch key.txt && echo "${{ secrets.SSH_PRIVATE_KEY }}" > key.txt
+          chmod 600 key.txt
+
+      - name: Create SSH key
+        run: |
+          mkdir ~/spring-boot-docker-without-docker
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/private.key
+          sudo chmod 600 ~/.ssh/private.key
+          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          sudo chmod 600 ~/.ssh/known_hosts
+        shell: bash
+        env:
+          SERVER_HOST: ${{ vars.SSH_HOST }}
+          SERVER_PORT: ${{ vars.SSH_PORT }}
+          SERVER_USERNAME: ${{ vars.SSH_USERNAME }}
+          SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+          SSH_KNOWN_HOSTS: ${{vars.SSH_HOST}}
+
+      - name: Set all environment variables
+        env:
+          SERVER_HOST: ${{ vars.SSH_HOST }}
+          SERVER_PORT: ${{ vars.SSH_PORT }}
+          SERVER_USERNAME: ${{ vars.SSH_USERNAME }}
+          IMAGE_TAG: ${{ github.run_number }}
+          CONTAINER_NAME: customer-app
+
+          APP_SERVER_PORT: ${{ vars.APP_SERVER_PORT_DEV }}
+          APP_ENVIRONMENT: ${{ vars.APP_ENVIRONMENT_DEV }}
+          SPRING_PROFILES_ACTIVE: ${{ vars.SPRING_PROFILES_ACTIVE_DEV }}
+
+        run: |
+          echo CONTAINER_NAME=$CONTAINER_NAME >> .env
+          echo IMAGE_TAG=$IMAGE_TAG >> .env
+          echo APP_SERVER_PORT=$APP_SERVER_PORT >> .env
+          echo APP_ENVIRONMENT=$APP_ENVIRONMENT >> .env
+          echo SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE >> .env
+
+      - name: Copy all environment variables
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ vars.SSH_HOST }}
+          username: ${{ vars.SSH_USERNAME }}
+          key: ${{ vars.SSH_PRIVATE_KEY_VARS }}
+          port: ${{ vars.SSH_PORT }}
+          source: "./.env"  # Path to the file on your runner
+          target: "~/spring-boot-docker-without-docker"  # Target directory on the server
+
+      - name: Run the application
+        env:
+          SERVER_HOST: ${{ vars.SSH_HOST }}
+          SERVER_PORT: ${{ vars.SSH_PORT }}
+          SERVER_USERNAME: ${{ vars.SSH_USERNAME }}
+          IMAGE_TAG: ${{ github.run_number }}
+
+          APP_SERVER_PORT: ${{ vars.APP_SERVER_PORT_DEV }}
+          APP_ENVIRONMENT: ${{ vars.APP_ENVIRONMENT_DEV }}
+          SPRING_PROFILES_ACTIVE: ${{ vars.SPRING_PROFILES_ACTIVE_DEV }}
+
+        run: |
+          set -e
+          ./deploy.sh
