@@ -35,7 +35,7 @@ public class HomeController {
 
     private final CustomerService customerService;
 
-    @GetMapping({"/", "customer"})
+    @GetMapping({"/"})
     public String home(@RequestParam(value = "name", defaultValue = "") String name, Model model) {
         List<Customer> customerList = customerService.getAllCustomers();
 
@@ -43,14 +43,14 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping("customer/create")
+    @GetMapping("create")
     public String create(Model model) {
         Customer customer = new Customer();
         model.addAttribute("customer", customer);
         return "create";
     }
 
-    @PostMapping("customer/save")
+    @PostMapping("save")
     public String save(
             @Valid @ModelAttribute("customer") Customer customer,
             BindingResult bindingResult, Model model,
@@ -64,7 +64,7 @@ public class HomeController {
         return "redirect:/";
     }
 
-    @GetMapping("/customer/{id}")
+    @GetMapping("/{id}")
     public String customer(@PathVariable Long id, Model model) {
         Optional<Customer> customer = customerService.findById(id);
 
@@ -73,14 +73,14 @@ public class HomeController {
         return "show";
     }
 
-    @GetMapping("customer/{id}/edit")
+    @GetMapping("{id}/edit")
     public String edit(@PathVariable long id, Model model) {
         Customer customer = customerService.findById(id).orElse(null);
         model.addAttribute("customer", customer);
         return "create";
     }
 
-    @GetMapping("customer/{id}/delete")
+    @GetMapping("{id}/delete")
     public String delete(@PathVariable long id, Model model, RedirectAttributes redirectAttributes) {
         customerService.deleteById(id);
         redirectAttributes.addFlashAttribute("message", "Customer deleted successfully");
