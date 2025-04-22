@@ -35,7 +35,7 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Build and push
-      run: mvn clean install jib:build -Djib.from-platforms="linux/amd64,linux/arm64" -Djib.to.image=hendisantika/customer:${{ github.run_number }} -Djib.to.auth.username=${{ secrets.DOCKERHUB_USERNAME }} -Djib.to.auth.password=${{ secrets.DOCKERHUB_TOKEN }}
+      run: mvn clean install jib:build -Djib.from-platforms="linux/amd64,linux/arm64" -Djib.to.image=hendisantika/customer -Djib.to.tags=${{ github.run_number }},latest -Djib.to.auth.username=${{ secrets.DOCKERHUB_USERNAME }} -Djib.to.auth.password=${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build and push to Cloud Raya
       run: |
