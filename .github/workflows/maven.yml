@@ -40,7 +40,7 @@ jobs:
     - name: Build and push to Cloud Raya
       run: |
         docker login registry.cloudraya.com --username=${{ secrets.CLOUDRAYA_USERNAME }} --password=${{ secrets.CLOUDRAYA_PASSWORD }}
-        mvn clean install jib:build -Djib.from-platforms="linux/amd64,linux/arm64" -Djib.to.image=registry.cloudraya.com/${{ secrets.CLOUDRAYA_USERNAME }}/customer-app:${{ github.run_number }},latest -Djib.to.auth.username=${{ secrets.CLOUDRAYA_USERNAME }} -Djib.to.auth.password=${{ secrets.CLOUDRAYA_PASSWORD }}
+        mvn clean install jib:build -Djib.from-platforms="linux/amd64,linux/arm64" -Djib.to.image=registry.cloudraya.com/${{ secrets.CLOUDRAYA_USERNAME }}/customer-app -Djib.to.tags=${{ github.run_number }},latest -Djib.to.auth.username=${{ secrets.CLOUDRAYA_USERNAME }} -Djib.to.auth.password=${{ secrets.CLOUDRAYA_PASSWORD }}
       #        docker build -t registry.cloudraya.com/${{ secrets.CLOUDRAYA_USERNAME }}/customer-app:${{ github.run_number }} .
       #        docker push registry.cloudraya.com/${{ secrets.CLOUDRAYA_USERNAME }}/customer-app:${{ github.run_number }}
 
