@@ -124,20 +124,20 @@ jobs:
           source: "./.env"  # Path to the file on your runner
           target: "~/customer-app"  # Target directory on the server
 
-      - name: Run the application
-        env:
-          SERVER_HOST: ${{ vars.SSH_HOST }}
-          SERVER_PORT: ${{ vars.SSH_PORT }}
-          SERVER_USERNAME: ${{ vars.SSH_USERNAME }}
-          IMAGE_TAG: ${{ github.run_number }}
-
-          APP_SERVER_PORT: ${{ vars.APP_SERVER_PORT_DEV }}
-          APP_ENVIRONMENT: ${{ vars.APP_ENVIRONMENT_DEV }}
-          SPRING_PROFILES_ACTIVE: ${{ vars.SPRING_PROFILES_ACTIVE_DEV }}
-
-        run: |
-          set -e
-          ./deploy.sh
+      #      - name: Run the application
+      #        env:
+      #          SERVER_HOST: ${{ vars.SSH_HOST }}
+      #          SERVER_PORT: ${{ vars.SSH_PORT }}
+      #          SERVER_USERNAME: ${{ vars.SSH_USERNAME }}
+      #          IMAGE_TAG: ${{ github.run_number }}
+      #
+      #          APP_SERVER_PORT: ${{ vars.APP_SERVER_PORT_DEV }}
+      #          APP_ENVIRONMENT: ${{ vars.APP_ENVIRONMENT_DEV }}
+      #          SPRING_PROFILES_ACTIVE: ${{ vars.SPRING_PROFILES_ACTIVE_DEV }}
+      #
+      #        run: |
+      #          set -e
+      #          ./deploy.sh
 
       - name: Run the application in Cloud Raya
         env:
