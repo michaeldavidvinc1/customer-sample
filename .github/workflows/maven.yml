@@ -40,10 +40,9 @@ jobs:
     - name: Build and push to Cloud Raya
       run: |
         docker login registry.cloudraya.com --username=${{ secrets.CLOUDRAYA_USERNAME }} --password=${{ secrets.CLOUDRAYA_PASSWORD }}
-        mvn clean install jib:build -Djib.from-platforms="linux/amd64,linux/arm64" -Djib.to.image=registry.cloudraya.com/${{ secrets.CLOUDRAYA_USERNAME }}/customer-app:${{ github.run_number }} -Djib.to.auth.username=${{ secrets.CLOUDRAYA_USERNAME }} -Djib.to.auth.password=${{ secrets.CLOUDRAYA_PASSWORD }}
+        mvn clean install jib:build -Djib.from-platforms="linux/amd64,linux/arm64" -Djib.to.image=registry.cloudraya.com/${{ secrets.CLOUDRAYA_USERNAME }}/customer-app:${{ github.run_number }},latest -Djib.to.auth.username=${{ secrets.CLOUDRAYA_USERNAME }} -Djib.to.auth.password=${{ secrets.CLOUDRAYA_PASSWORD }}
       #        docker build -t registry.cloudraya.com/${{ secrets.CLOUDRAYA_USERNAME }}/customer-app:${{ github.run_number }} .
       #        docker push registry.cloudraya.com/${{ secrets.CLOUDRAYA_USERNAME }}/customer-app:${{ github.run_number }}
-
 
       # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
@@ -104,16 +103,6 @@ jobs:
           echo APP_ENVIRONMENT=$APP_ENVIRONMENT >> .env
           echo SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE >> .env
 
-      #      - name: Copy all environment variables
-      #        uses: appleboy/scp-action@v0.1.7
-      #        with:
-      #          host: ${{ vars.SSH_HOST }}
-      #          username: ${{ vars.SSH_USERNAME }}
-      #          key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #          port: ${{ vars.SSH_PORT }}
-      #          source: "./.env"  # Path to the file on your runner
-      #          target: "~/customer-app"  # Target directory on the server
-
       - name: Copy all environment variables to Cloud Raya
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -123,21 +112,6 @@ jobs:
           port: ${{ vars.SSH_PORT }}
           source: "./.env"  # Path to the file on your runner
           target: "~/customer-app"  # Target directory on the server
-
-      #      - name: Run the application
-      #        env:
-      #          SERVER_HOST: ${{ vars.SSH_HOST }}
-      #          SERVER_PORT: ${{ vars.SSH_PORT }}
-      #          SERVER_USERNAME: ${{ vars.SSH_USERNAME }}
-      #          IMAGE_TAG: ${{ github.run_number }}
-      #
-      #          APP_SERVER_PORT: ${{ vars.APP_SERVER_PORT_DEV }}
-      #          APP_ENVIRONMENT: ${{ vars.APP_ENVIRONMENT_DEV }}
-      #          SPRING_PROFILES_ACTIVE: ${{ vars.SPRING_PROFILES_ACTIVE_DEV }}
-      #
-      #        run: |
-      #          set -e
-      #          ./deploy.sh
 
       - name: Run the application in Cloud Raya
         env:
