@@ -2,6 +2,6 @@ services:
   app:
     build: .
     ports:
-      - "8080:8080"
+      - "9003:9003"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
