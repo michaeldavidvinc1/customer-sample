@@ -90,6 +90,9 @@ jobs:
           IMAGE_NAME: customer
           IMAGE_TAG: ${{ github.run_number }}
           CONTAINER_NAME: customer-app
+          CLOUDRAYA_REGISTRY_URL: ${{ vars.CLOUDRAYA_REGISTRY_URL }}
+          CLOUDRAYA_REGISTRY_USERNAME: ${{ secrets.CLOUDRAYA_USERNAME }}
+          CLOUDRAYA_REGISTRY_PASSWORD: ${{ secrets.CLOUDRAYA_PASSWORD }}
 
           APP_SERVER_PORT: ${{ vars.APP_SERVER_PORT_DEV }}
           APP_ENVIRONMENT: ${{ vars.APP_ENVIRONMENT_DEV }}
@@ -102,6 +105,9 @@ jobs:
           echo APP_SERVER_PORT=$APP_SERVER_PORT >> .env
           echo APP_ENVIRONMENT=$APP_ENVIRONMENT >> .env
           echo SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE >> .env
+          echo CLOUDRAYA_REGISTRY_URL=$CLOUDRAYA_REGISTRY_URL >> .env
+          echo CLOUDRAYA_REGISTRY_USERNAME=$CLOUDRAYA_REGISTRY_USERNAME >> .env
+          echo CLOUDRAYA_REGISTRY_PASSWORD=$CLOUDRAYA_REGISTRY_PASSWORD >> .env
 
       - name: Copy all environment variables to Cloud Raya
         uses: appleboy/scp-action@v0.1.7
@@ -123,6 +129,9 @@ jobs:
           APP_SERVER_PORT: ${{ vars.APP_SERVER_PORT_DEV }}
           APP_ENVIRONMENT: ${{ vars.APP_ENVIRONMENT_DEV }}
           SPRING_PROFILES_ACTIVE: ${{ vars.SPRING_PROFILES_ACTIVE_DEV }}
+          CLOUDRAYA_REGISTRY_URL: ${{ vars.CLOUDRAYA_REGISTRY_URL }}
+          CLOUDRAYA_REGISTRY_USERNAME: ${{ secrets.CLOUDRAYA_USERNAME }}
+          CLOUDRAYA_REGISTRY_PASSWORD: ${{ secrets.CLOUDRAYA_PASSWORD }}
 
         run: |
           set -e
