@@ -5,7 +5,7 @@ metadata:
   labels:
     app: customer-app
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - port: 9003
       targetPort: 9003

@@ -25,19 +25,8 @@ spec:
           emptyDir: { }
       containers:
         - name: customer-app
-          image: registry.cloudraya.com/ir-cr-hendi-144/customer-app
+          image: registry.cloudraya.com/ir-cr-hendi-144/customer-app:latest
           imagePullPolicy: IfNotPresent
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - ALL
-            readOnlyRootFilesystem: true
-          volumeMounts:
-            - name: customer-photos
-              mountPath: /customer-photos
-            - name: tmp-dir
-              mountPath: /tmp
           ports:
             - containerPort: 8081
               name: http
@@ -65,3 +54,5 @@ spec:
             initialDelaySeconds: 45
             periodSeconds: 15
             timeoutSeconds: 5
+      imagePullSecrets:
+        - name: cloud-raya-secret
