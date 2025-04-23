@@ -111,7 +111,7 @@
                     </to>
                     <container>
                         <ports>
-                            <port>8081</port>
+                            <port>8080</port>
                         </ports>
                         <environment>
                             <SPRING_PROFILES_ACTIVE>prod</SPRING_PROFILES_ACTIVE>

@@ -40,7 +40,7 @@ spec:
             - name: tmp-dir
               mountPath: /tmp
           ports:
-            - containerPort: 8081
+            - containerPort: 8080
               name: http
           env:
             - name: SPRING_PROFILES_ACTIVE

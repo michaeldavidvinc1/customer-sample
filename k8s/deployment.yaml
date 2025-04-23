@@ -25,7 +25,7 @@ spec:
           emptyDir: { }
       containers:
         - name: customer-app
-          image: registry.cloudraya.com/ir-cr-hendi-144/customer-app:latest
+          image: registry.cloudraya.com/ir-cr-hendi-144/customer-app
           imagePullPolicy: IfNotPresent
           securityContext:
             allowPrivilegeEscalation: false

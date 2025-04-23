@@ -20,8 +20,8 @@ function show_usage {
 
 # Default values
 REGISTRY="registry.cloudraya.com/ir-cr-hendi-144"
-TAG="23"
-NAMESPACE="default"
+TAG="latest"
+NAMESPACE="hendi-cluster"
 USE_PERSISTENT=false
 USE_INGRESS=false
 DOMAIN="k8s.jvm.my.id"
@@ -127,7 +127,7 @@ kubectl apply -f k8s/service.yaml -n "$NAMESPACE"
 # Apply ingress if requested
 if [ "$USE_INGRESS" = true ]; then
   echo "Updating ingress domain to $DOMAIN..."
-  sed -i.bak "s|host: customer-app.yourdomain.com|host: $DOMAIN|g" k8s/ingress.yaml
+  sed -i.bak "s|host: k8s.jvm.my.id|host: $DOMAIN|g" k8s/ingress.yaml
   
   echo "Deploying ingress..."
   kubectl apply -f k8s/ingress.yaml -n "$NAMESPACE"
