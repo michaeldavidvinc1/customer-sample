@@ -109,6 +109,16 @@ jobs:
           echo CLOUDRAYA_REGISTRY_USERNAME=$CLOUDRAYA_REGISTRY_USERNAME >> .env
           echo CLOUDRAYA_REGISTRY_PASSWORD=$CLOUDRAYA_REGISTRY_PASSWORD >> .env
 
+      - name: Copy all environment variables to Linode
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ vars.SSH_HOST }}
+          username: ${{ vars.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ vars.SSH_PORT }}
+          source: "./.env"  # Path to the file on your runner
+          target: "~/customer-app"  # Target directory on the server
+
       - name: Copy all environment variables to Cloud Raya
         uses: appleboy/scp-action@v0.1.7
         with:
