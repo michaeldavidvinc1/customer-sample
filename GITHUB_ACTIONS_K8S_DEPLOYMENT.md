@@ -83,6 +83,14 @@ displays:
 3. Regularly rotate access tokens and credentials
 4. Consider using RBAC to limit access to Kubernetes resources
 
+```shell
+kubectl create secret docker-registry cloud-raya-secret \
+  --docker-server=$CLOUDRAYA_REGISTRY_URL \
+  --docker-username=$CLOUDRAYA_REGISTRY_USERNAME \
+  --docker-password=$CLOUDRAYA_REGISTRY_PASSWORD \
+  --docker-email=hendisantika@yahoo.co.id
+```
+
 ## Additional Resources
 
 - [Kubernetes Documentation](https://kubernetes.io/docs/home/)
