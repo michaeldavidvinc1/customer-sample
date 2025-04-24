@@ -74,11 +74,11 @@
                     <td class="px-6 py-4 text-center" th:text="${customer.email}"></td>
                     <td class="px-6 py-4 text-center">
                         <a class="bg-green-600 font-medium hover:bg-green-700 px-3 py-2 rounded-md text-sm text-white"
-                           th:href="@{/customer/{id}(id=${customer.id})}">View</a>
+                           th:href="@{/{id}(id=${customer.id})}">View</a>
                         <a class="bg-blue-600 font-medium hover:bg-blue-700 px-3 py-2 rounded-md text-sm text-white"
-                           th:href="@{/customer/{id}/edit(id=${customer.id})}">Edit</a>
+                           th:href="@{/{id}/edit(id=${customer.id})}">Edit</a>
                         <a class="bg-red-600 font-medium hover:bg-red-700 px-3 py-2 rounded-md text-sm text-white"
-                           th:href="@{/customer/{id}/delete(id=${customer.id})}">Delete</a>
+                           th:href="@{/{id}/delete(id=${customer.id})}">Delete</a>
                     </td>
                 </tr>
                 </tbody>

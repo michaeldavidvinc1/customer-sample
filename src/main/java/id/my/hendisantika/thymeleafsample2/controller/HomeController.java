@@ -125,7 +125,7 @@ public class HomeController {
     }
 
     @GetMapping("{id}/delete")
-    public String delete(@PathVariable long id, Model model, RedirectAttributes redirectAttributes) {
+    public String delete(@PathVariable long id, RedirectAttributes redirectAttributes) {
         customerService.deleteById(id);
         redirectAttributes.addFlashAttribute("message", "Customer deleted successfully");
         return "redirect:/";
