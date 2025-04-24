@@ -9,6 +9,8 @@ spring:
     console:
       enabled: true
       path: /h2-console
+      settings:
+        web-allow-others: true
 
   jpa:
     hibernate:
@@ -20,3 +22,6 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
 server:
   port: 9003
+  forward-headers-strategy: framework
+  servlet:
+    context-path: /
