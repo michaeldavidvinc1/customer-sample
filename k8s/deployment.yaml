@@ -28,7 +28,7 @@ spec:
           image: registry.cloudraya.com/ir-cr-hendi-144/customer-app:latest
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 8081
+            - containerPort: 9003
               name: http
           env:
             - name: SPRING_PROFILES_ACTIVE

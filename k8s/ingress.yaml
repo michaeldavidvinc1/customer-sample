@@ -20,7 +20,7 @@ spec:
               service:
                 name: customer-app
                 port:
-                  number: 8081
+                  number: 9003
   tls:
     - hosts:
         - k8s.jvm.my.id

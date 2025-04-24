@@ -113,7 +113,7 @@ echo "Deploying to Kubernetes..."
 if [ "$USE_PERSISTENT" = true ]; then
   echo "Creating persistent volume claim..."
   kubectl apply -f k8s/persistent-volume-claim.yaml -n "$NAMESPACE"
-  
+
   echo "Deploying with persistent storage..."
   kubectl apply -f k8s/deployment-with-pvc.yaml -n "$NAMESPACE"
 else
@@ -128,7 +128,7 @@ kubectl apply -f k8s/service.yaml -n "$NAMESPACE"
 if [ "$USE_INGRESS" = true ]; then
   echo "Updating ingress domain to $DOMAIN..."
   sed -i.bak "s|host: k8s.jvm.my.id|host: $DOMAIN|g" k8s/ingress.yaml
-  
+
   echo "Deploying ingress..."
   kubectl apply -f k8s/ingress.yaml -n "$NAMESPACE"
 fi
@@ -148,7 +148,7 @@ if [ "$USE_INGRESS" = true ]; then
 else
   echo ""
   echo "To access your application, run:"
-  echo "  kubectl port-forward svc/customer-app 8081:8081 -n $NAMESPACE"
+  echo "  kubectl port-forward svc/customer-app 9003:9003 -n $NAMESPACE"
   echo ""
-  echo "Then open http://localhost:8081 in your browser"
+  echo "Then open http://localhost:9003 in your browser"
 fi
