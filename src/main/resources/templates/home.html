@@ -87,6 +87,19 @@
     </main>
 </div>
 
+<footer class="bg-gray-800 text-white py-4 mt-8">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-2 md:mb-0">
+                <p>&copy; 2024 hendisantika. All rights reserved.</p>
+            </div>
+            <div class="text-sm text-gray-300">
+                <p>IP Address: <span th:text="${ipAddress}">127.0.0.1</span></p>
+                <p>Hostname: <span th:text="${hostname}">localhost</span></p>
+            </div>
+        </div>
+    </div>
+</footer>
 
 </body>
 </html>

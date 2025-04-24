@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +41,16 @@ public class HomeController {
     public String home(@RequestParam(value = "name", defaultValue = "") String name, Model model) {
         List<Customer> customerList = customerService.getAllCustomers();
 
+        // Add IP address and hostname for footer
+        try {
+            InetAddress inetAddress = InetAddress.getLocalHost();
+            model.addAttribute("ipAddress", inetAddress.getHostAddress());
+            model.addAttribute("hostname", inetAddress.getHostName());
+        } catch (UnknownHostException e) {
+            model.addAttribute("ipAddress", "Unknown");
+            model.addAttribute("hostname", "Unknown");
+        }
+
         model.addAttribute("customerList", customerList);
         return "home";
     }
@@ -47,6 +59,17 @@ public class HomeController {
     public String create(Model model) {
         Customer customer = new Customer();
         model.addAttribute("customer", customer);
+
+        // Add IP address and hostname for footer
+        try {
+            InetAddress inetAddress = InetAddress.getLocalHost();
+            model.addAttribute("ipAddress", inetAddress.getHostAddress());
+            model.addAttribute("hostname", inetAddress.getHostName());
+        } catch (UnknownHostException e) {
+            model.addAttribute("ipAddress", "Unknown");
+            model.addAttribute("hostname", "Unknown");
+        }
+
         return "create";
     }
 
@@ -70,6 +93,16 @@ public class HomeController {
 
         customer.ifPresent(value -> model.addAttribute("customer", value));
 
+        // Add IP address and hostname for footer
+        try {
+            InetAddress inetAddress = InetAddress.getLocalHost();
+            model.addAttribute("ipAddress", inetAddress.getHostAddress());
+            model.addAttribute("hostname", inetAddress.getHostName());
+        } catch (UnknownHostException e) {
+            model.addAttribute("ipAddress", "Unknown");
+            model.addAttribute("hostname", "Unknown");
+        }
+
         return "show";
     }
 
@@ -77,6 +110,17 @@ public class HomeController {
     public String edit(@PathVariable long id, Model model) {
         Customer customer = customerService.findById(id).orElse(null);
         model.addAttribute("customer", customer);
+
+        // Add IP address and hostname for footer
+        try {
+            InetAddress inetAddress = InetAddress.getLocalHost();
+            model.addAttribute("ipAddress", inetAddress.getHostAddress());
+            model.addAttribute("hostname", inetAddress.getHostName());
+        } catch (UnknownHostException e) {
+            model.addAttribute("ipAddress", "Unknown");
+            model.addAttribute("hostname", "Unknown");
+        }
+
         return "create";
     }
 
