@@ -110,7 +110,7 @@ jobs:
           echo CLOUDRAYA_REGISTRY_PASSWORD=$CLOUDRAYA_REGISTRY_PASSWORD >> .env
 
       #      - name: Copy all environment variables to Cloud Raya 1
-      #        uses: appleboy/scp-action@v0.1.7
+      #        uses: appleboy/scp-action@v1.0.0
       #        with:
       #          host: ${{ vars.SSH_HOST }}
       #          username: ${{ vars.SSH_USERNAME }}
@@ -120,7 +120,7 @@ jobs:
       #          target: "~/customer-app"  # Target directory on the server
 
       - name: Copy all environment variables to Cloud Raya 2
-        uses: appleboy/scp-action@v0.1.7
+        uses: appleboy/scp-action@v1.0.0
         with:
           host: ${{ vars.SSH_HOST_CLOUDRAYA }}
           username: ${{ vars.SSH_USERNAME }}
