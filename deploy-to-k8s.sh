@@ -6,7 +6,7 @@ function show_usage {
   echo "Usage: $0 [options]"
   echo "Options:"
   echo "  -h, --help                 Show this help message"
-  echo "  -r, --registry REGISTRY    Docker registry to use (default: registry.cloudraya.com/ir-cr-hendi-144)"
+  echo "  -r, --registry REGISTRY    Docker registry to use (default: registry.cloudraya.com/ir-cr-michael-4443)"
   echo "  -t, --tag TAG              Image tag to use (default: latest)"
   echo "  -n, --namespace NAMESPACE  Kubernetes namespace to deploy to (default: default)"
   echo "  -p, --persistent           Use persistent storage for customer photos"
