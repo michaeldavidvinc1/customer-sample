@@ -4,7 +4,7 @@ metadata:
   name: customer-app
 build:
   artifacts:
-    - image: registry.cloudraya.com/ir-cr-hendi-144/customer-app
+    - image: registry.cloudraya.com/ir-cr-michael-4443/customer-app
       context: .
       jib:
         type: maven
@@ -19,7 +19,7 @@ profiles:
       - command: dev
     build:
       artifacts:
-        - image: registry.cloudraya.com/ir-cr-hendi-144/customer-app
+        - image: registry.cloudraya.com/ir-cr-michael-4443/customer-app
           context: .
           jib:
             type: maven
