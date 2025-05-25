@@ -8,6 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.time.LocalDateTime;
+
 @Slf4j
 @SpringBootApplication
 public class SpringBootThymeleafSample2Application {
@@ -27,36 +29,42 @@ public class SpringBootThymeleafSample2Application {
                 customer1.setLastName("Yuji");
                 customer1.setEmail("yuji@jujutsukaisen.com");
                 customer1.setPhone("123-456-7890");
+                customer1.setCreatedAt(LocalDateTime.now());
 
                 Customer customer2 = new Customer();
                 customer2.setFirstName("Fushiguro");
                 customer2.setLastName("Megumi");
                 customer2.setEmail("megumi@jujutsukaisen.com");
                 customer2.setPhone("987-654-3210");
+                customer2.setCreatedAt(LocalDateTime.now());
 
                 Customer customer3 = new Customer();
                 customer3.setFirstName("Satoru");
                 customer3.setLastName("Gojo");
                 customer3.setEmail("go@jujutsukaisen.com");
                 customer3.setPhone("555-123-4567");
+                customer3.setCreatedAt(LocalDateTime.now());
 
                 Customer customer4 = new Customer();
                 customer4.setFirstName("Kugisaki");
                 customer4.setLastName("Naobara");
                 customer4.setEmail("naobara@jujutsukaisen.com");
                 customer4.setPhone("444-555-6666");
+                customer4.setCreatedAt(LocalDateTime.now());
 
                 Customer customer5 = new Customer();
                 customer5.setFirstName("Sukuna");
                 customer5.setLastName("Ryoumen");
                 customer5.setEmail("sukuna@jujutsukaisen.com");
                 customer5.setPhone("777-888-9999");
+                customer5.setCreatedAt(LocalDateTime.now());
 
                 Customer customer6 = new Customer();
                 customer6.setFirstName("Suguru");
                 customer6.setLastName("Geto");
                 customer6.setEmail("geto@jujutsukaisen.com");
                 customer6.setPhone("777-888-9999");
+                customer6.setCreatedAt(LocalDateTime.now());
 
                 // Save customers to database
                 customerRepository.save(customer1);

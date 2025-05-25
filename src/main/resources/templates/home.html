@@ -61,6 +61,7 @@
                     <th class="px-6 py-3 text-center">Last Name</th>
                     <th class="px-6 py-3 text-center">Email</th>
                     <th class="px-6 py-3 text-center">Phone</th>
+                    <th class="px-6 py-3 text-center">Created At</th>
                     <th class="px-6 py-3 text-center">&nbsp;</th>
                 </tr>
                 </thead>
@@ -72,6 +73,8 @@
                     <td class="px-6 py-4 text-center" th:text="${customer.lastName}"></td>
                     <td class="px-6 py-4 text-center" th:text="${customer.phone}"></td>
                     <td class="px-6 py-4 text-center" th:text="${customer.email}"></td>
+                    <td class="px-6 py-4 text-center"
+                        th:text="${#temporals.format(customer.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
                     <td class="px-6 py-4 text-center">
                         <a class="bg-green-600 font-medium hover:bg-green-700 px-3 py-2 rounded-md text-sm text-white"
                            th:href="@{/{id}(id=${customer.id})}">View</a>

@@ -14,6 +14,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : spring-boot-thymeleaf-sample2
@@ -56,6 +58,9 @@ public class Customer {
 
     @Column(name = "photo")
     private String photo;
+
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public String getPhotosImagePath() {
         if (photo == null || id == null) return null;

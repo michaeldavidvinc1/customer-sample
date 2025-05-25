@@ -17,6 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,15 +42,18 @@ public class HomeController {
     @GetMapping({"/"})
     public String home(@RequestParam(value = "name", defaultValue = "") String name, Model model) {
         List<Customer> customerList = customerService.getAllCustomers();
+        Timestamp timestamp = new Timestamp(new Date().getTime());
 
         // Add IP address and hostname for footer
         try {
             InetAddress inetAddress = InetAddress.getLocalHost();
             model.addAttribute("ipAddress", inetAddress.getHostAddress());
             model.addAttribute("hostname", inetAddress.getHostName());
+            model.addAttribute("timestamp", timestamp);
         } catch (UnknownHostException e) {
             model.addAttribute("ipAddress", "Unknown");
             model.addAttribute("hostname", "Unknown");
+            model.addAttribute("timestamp", timestamp);
         }
 
         model.addAttribute("customerList", customerList);
