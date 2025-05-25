@@ -11,7 +11,7 @@ metadata:
     # nginx.ingress.kubernetes.io/enable-cors: "true"
 spec:
   rules:
-    - host: k8s.jvm.my.id
+    - host: k8s.michaeldavidvinc.my.id
       http:
         paths:
           - path: /
@@ -23,5 +23,5 @@ spec:
                   number: 9003
   tls:
     - hosts:
-        - k8s.jvm.my.id
+        - k8s.michaeldavidvinc.my.id
       secretName: customer-app-tls
