@@ -49,122 +49,122 @@ jobs:
       uses: advanced-security/maven-dependency-submission-action@b275d12641ac2d2108b2cbb7598b154ad2f2cee8
 
 
-  deploy:
-    needs: build
-    name: deploy image
-    runs-on: ubuntu-24.04
-    environment: development
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+  # deploy:
+  #   needs: build
+  #   name: deploy image
+  #   runs-on: ubuntu-24.04
+  #   environment: development
+  #   steps:
+  #     - name: Checkout repo
+  #       uses: actions/checkout@v4
 
-      - name: Add Server key
-        run: |
-          touch key.txt && echo "${{ secrets.SSH_PRIVATE_KEY }}" > key.txt
-          chmod 600 key.txt
+  #     - name: Add Server key
+  #       run: |
+  #         touch key.txt && echo "${{ secrets.SSH_PRIVATE_KEY }}" > key.txt
+  #         chmod 600 key.txt
 
-      - name: Create SSH key
-        run: |
-          mkdir ~/customer-app
-          mkdir -p ~/.ssh/
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/private.key
-          sudo chmod 600 ~/.ssh/private.key
-          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-          sudo chmod 600 ~/.ssh/known_hosts
-        shell: bash
-        env:
-          SERVER_HOST: ${{ vars.SSH_HOST }}
-          SERVER_HOST_CLOUDRAYA: ${{ vars.SSH_HOST_CLOUDRAYA }}
-          SERVER_PORT: ${{ vars.SSH_PORT }}
-          SERVER_USERNAME: ${{ vars.SSH_USERNAME }}
-          SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
-          SSH_KNOWN_HOSTS: ${{vars.SSH_HOST}}
-          SSH_KNOWN_HOSTS_CLOUDRAYA: ${{vars.SSH_HOST_CLOUDRAYA}}
+  #     - name: Create SSH key
+  #       run: |
+  #         mkdir ~/customer-app
+  #         mkdir -p ~/.ssh/
+  #         echo "$SSH_PRIVATE_KEY" > ~/.ssh/private.key
+  #         sudo chmod 600 ~/.ssh/private.key
+  #         echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+  #         sudo chmod 600 ~/.ssh/known_hosts
+  #       shell: bash
+  #       env:
+  #         SERVER_HOST: ${{ vars.SSH_HOST }}
+  #         SERVER_HOST_CLOUDRAYA: ${{ vars.SSH_HOST_CLOUDRAYA }}
+  #         SERVER_PORT: ${{ vars.SSH_PORT }}
+  #         SERVER_USERNAME: ${{ vars.SSH_USERNAME }}
+  #         SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+  #         SSH_KNOWN_HOSTS: ${{vars.SSH_HOST}}
+  #         SSH_KNOWN_HOSTS_CLOUDRAYA: ${{vars.SSH_HOST_CLOUDRAYA}}
 
-      - name: Set all environment variables
-        env:
-          SERVER_HOST: ${{ vars.SSH_HOST }}
-          SERVER_HOST_CLOUDRAYA: ${{ vars.SSH_HOST_CLOUDRAYA }}
-          SERVER_PORT: ${{ vars.SSH_PORT }}
-          SERVER_USERNAME: ${{ vars.SSH_USERNAME }}
-          IMAGE_NAME: customer
-          IMAGE_TAG: ${{ github.run_number }}
-          CONTAINER_NAME: customer-app
-          CLOUDRAYA_REGISTRY_URL: ${{ vars.CLOUDRAYA_REGISTRY_URL }}
-          CLOUDRAYA_REGISTRY_USERNAME: ${{ secrets.CLOUDRAYA_USERNAME }}
-          CLOUDRAYA_REGISTRY_PASSWORD: ${{ secrets.CLOUDRAYA_PASSWORD }}
+  #     - name: Set all environment variables
+  #       env:
+  #         SERVER_HOST: ${{ vars.SSH_HOST }}
+  #         SERVER_HOST_CLOUDRAYA: ${{ vars.SSH_HOST_CLOUDRAYA }}
+  #         SERVER_PORT: ${{ vars.SSH_PORT }}
+  #         SERVER_USERNAME: ${{ vars.SSH_USERNAME }}
+  #         IMAGE_NAME: customer
+  #         IMAGE_TAG: ${{ github.run_number }}
+  #         CONTAINER_NAME: customer-app
+  #         CLOUDRAYA_REGISTRY_URL: ${{ vars.CLOUDRAYA_REGISTRY_URL }}
+  #         CLOUDRAYA_REGISTRY_USERNAME: ${{ secrets.CLOUDRAYA_USERNAME }}
+  #         CLOUDRAYA_REGISTRY_PASSWORD: ${{ secrets.CLOUDRAYA_PASSWORD }}
 
-          APP_SERVER_PORT: ${{ vars.APP_SERVER_PORT_DEV }}
-          APP_ENVIRONMENT: ${{ vars.APP_ENVIRONMENT_DEV }}
-          SPRING_PROFILES_ACTIVE: ${{ vars.SPRING_PROFILES_ACTIVE_DEV }}
+  #         APP_SERVER_PORT: ${{ vars.APP_SERVER_PORT_DEV }}
+  #         APP_ENVIRONMENT: ${{ vars.APP_ENVIRONMENT_DEV }}
+  #         SPRING_PROFILES_ACTIVE: ${{ vars.SPRING_PROFILES_ACTIVE_DEV }}
 
-        run: |
-          echo CONTAINER_NAME=$CONTAINER_NAME >> .env
-          echo IMAGE_NAME=$IMAGE_NAME >> .env
-          echo IMAGE_TAG=$IMAGE_TAG >> .env
-          echo APP_SERVER_PORT=$APP_SERVER_PORT >> .env
-          echo APP_ENVIRONMENT=$APP_ENVIRONMENT >> .env
-          echo SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE >> .env
-          echo CLOUDRAYA_REGISTRY_URL=$CLOUDRAYA_REGISTRY_URL >> .env
-          echo CLOUDRAYA_REGISTRY_USERNAME=$CLOUDRAYA_REGISTRY_USERNAME >> .env
-          echo CLOUDRAYA_REGISTRY_PASSWORD=$CLOUDRAYA_REGISTRY_PASSWORD >> .env
+  #       run: |
+  #         echo CONTAINER_NAME=$CONTAINER_NAME >> .env
+  #         echo IMAGE_NAME=$IMAGE_NAME >> .env
+  #         echo IMAGE_TAG=$IMAGE_TAG >> .env
+  #         echo APP_SERVER_PORT=$APP_SERVER_PORT >> .env
+  #         echo APP_ENVIRONMENT=$APP_ENVIRONMENT >> .env
+  #         echo SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE >> .env
+  #         echo CLOUDRAYA_REGISTRY_URL=$CLOUDRAYA_REGISTRY_URL >> .env
+  #         echo CLOUDRAYA_REGISTRY_USERNAME=$CLOUDRAYA_REGISTRY_USERNAME >> .env
+  #         echo CLOUDRAYA_REGISTRY_PASSWORD=$CLOUDRAYA_REGISTRY_PASSWORD >> .env
 
-      #      - name: Copy all environment variables to Cloud Raya 1
-      #        uses: appleboy/scp-action@v1.0.0
-      #        with:
-      #          host: ${{ vars.SSH_HOST }}
-      #          username: ${{ vars.SSH_USERNAME }}
-      #          key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #          port: ${{ vars.SSH_PORT }}
-      #          source: "./.env"  # Path to the file on your runner
-      #          target: "~/customer-app"  # Target directory on the server
+  #     #      - name: Copy all environment variables to Cloud Raya 1
+  #     #        uses: appleboy/scp-action@v1.0.0
+  #     #        with:
+  #     #          host: ${{ vars.SSH_HOST }}
+  #     #          username: ${{ vars.SSH_USERNAME }}
+  #     #          key: ${{ secrets.SSH_PRIVATE_KEY }}
+  #     #          port: ${{ vars.SSH_PORT }}
+  #     #          source: "./.env"  # Path to the file on your runner
+  #     #          target: "~/customer-app"  # Target directory on the server
 
-      - name: Copy all environment variables to Cloud Raya 2
-        uses: appleboy/scp-action@v1.0.0
-        with:
-          host: ${{ vars.SSH_HOST_CLOUDRAYA }}
-          username: ${{ vars.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ vars.SSH_PORT }}
-          source: "./.env"  # Path to the file on your runner
-          target: "~/customer-app"  # Target directory on the server
+  #     - name: Copy all environment variables to Cloud Raya 2
+  #       uses: appleboy/scp-action@v1.0.0
+  #       with:
+  #         host: ${{ vars.SSH_HOST_CLOUDRAYA }}
+  #         username: ${{ vars.SSH_USERNAME }}
+  #         key: ${{ secrets.SSH_PRIVATE_KEY }}
+  #         port: ${{ vars.SSH_PORT }}
+  #         source: "./.env"  # Path to the file on your runner
+  #         target: "~/customer-app"  # Target directory on the server
 
-      #      - name: Run the application in Cloud Raya 1
-      #        env:
-      #          SERVER_HOST: ${{ vars.SSH_HOST }}
-      #          SERVER_PORT: ${{ vars.SSH_PORT }}
-      #          SERVER_USERNAME: ${{ vars.SSH_USERNAME }}
-      #          IMAGE_TAG: ${{ github.run_number }}
-      #
-      #          APP_SERVER_PORT: ${{ vars.APP_SERVER_PORT_DEV }}
-      #          APP_ENVIRONMENT: ${{ vars.APP_ENVIRONMENT_DEV }}
-      #          SPRING_PROFILES_ACTIVE: ${{ vars.SPRING_PROFILES_ACTIVE_DEV }}
-      #          CLOUDRAYA_REGISTRY_URL: ${{ vars.CLOUDRAYA_REGISTRY_URL }}
-      #          CLOUDRAYA_REGISTRY_USERNAME: ${{ secrets.CLOUDRAYA_USERNAME }}
-      #          CLOUDRAYA_REGISTRY_PASSWORD: ${{ secrets.CLOUDRAYA_PASSWORD }}
-      #
-      #        run: |
-      #          set -e
-      #          ./deploy.sh
+  #     #      - name: Run the application in Cloud Raya 1
+  #     #        env:
+  #     #          SERVER_HOST: ${{ vars.SSH_HOST }}
+  #     #          SERVER_PORT: ${{ vars.SSH_PORT }}
+  #     #          SERVER_USERNAME: ${{ vars.SSH_USERNAME }}
+  #     #          IMAGE_TAG: ${{ github.run_number }}
+  #     #
+  #     #          APP_SERVER_PORT: ${{ vars.APP_SERVER_PORT_DEV }}
+  #     #          APP_ENVIRONMENT: ${{ vars.APP_ENVIRONMENT_DEV }}
+  #     #          SPRING_PROFILES_ACTIVE: ${{ vars.SPRING_PROFILES_ACTIVE_DEV }}
+  #     #          CLOUDRAYA_REGISTRY_URL: ${{ vars.CLOUDRAYA_REGISTRY_URL }}
+  #     #          CLOUDRAYA_REGISTRY_USERNAME: ${{ secrets.CLOUDRAYA_USERNAME }}
+  #     #          CLOUDRAYA_REGISTRY_PASSWORD: ${{ secrets.CLOUDRAYA_PASSWORD }}
+  #     #
+  #     #        run: |
+  #     #          set -e
+  #     #          ./deploy.sh
 
 
-      - name: Run the application in Cloud Raya 2
-        env:
-          SERVER_HOST: ${{ vars.SSH_HOST_CLOUDRAYA }}
-          SERVER_PORT: ${{ vars.SSH_PORT }}
-          SERVER_USERNAME: ${{ vars.SSH_USERNAME }}
-          IMAGE_TAG: ${{ github.run_number }}
+  #     - name: Run the application in Cloud Raya 2
+  #       env:
+  #         SERVER_HOST: ${{ vars.SSH_HOST_CLOUDRAYA }}
+  #         SERVER_PORT: ${{ vars.SSH_PORT }}
+  #         SERVER_USERNAME: ${{ vars.SSH_USERNAME }}
+  #         IMAGE_TAG: ${{ github.run_number }}
 
-          APP_SERVER_PORT: ${{ vars.APP_SERVER_PORT_DEV }}
-          APP_ENVIRONMENT: ${{ vars.APP_ENVIRONMENT_DEV }}
-          SPRING_PROFILES_ACTIVE: ${{ vars.SPRING_PROFILES_ACTIVE_DEV }}
-          CLOUDRAYA_REGISTRY_URL: ${{ vars.CLOUDRAYA_REGISTRY_URL }}
-          CLOUDRAYA_REGISTRY_USERNAME: ${{ secrets.CLOUDRAYA_USERNAME }}
-          CLOUDRAYA_REGISTRY_PASSWORD: ${{ secrets.CLOUDRAYA_PASSWORD }}
+  #         APP_SERVER_PORT: ${{ vars.APP_SERVER_PORT_DEV }}
+  #         APP_ENVIRONMENT: ${{ vars.APP_ENVIRONMENT_DEV }}
+  #         SPRING_PROFILES_ACTIVE: ${{ vars.SPRING_PROFILES_ACTIVE_DEV }}
+  #         CLOUDRAYA_REGISTRY_URL: ${{ vars.CLOUDRAYA_REGISTRY_URL }}
+  #         CLOUDRAYA_REGISTRY_USERNAME: ${{ secrets.CLOUDRAYA_USERNAME }}
+  #         CLOUDRAYA_REGISTRY_PASSWORD: ${{ secrets.CLOUDRAYA_PASSWORD }}
 
-        run: |
-          set -e
-          ./deploy-cloudraya.sh
+  #       run: |
+  #         set -e
+  #         ./deploy-cloudraya.sh
 
   deploy-to-k8s:
     needs: build
