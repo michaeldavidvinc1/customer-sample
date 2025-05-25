@@ -91,14 +91,14 @@ fi
 
 # Update image references in deployment files
 echo "Updating image references in deployment files..."
-sed -i.bak "s|image: registry.cloudraya.com/ir-cr-hendi-144/customer-app.*|image: $REGISTRY/customer-app:$TAG|g" k8s/deployment.yaml
-sed -i.bak "s|image: registry.cloudraya.com/ir-cr-hendi-144/customer-app.*|image: $REGISTRY/customer-app:$TAG|g" k8s/deployment-with-pvc.yaml
+sed -i.bak "s|image: registry.cloudraya.com/ir-cr-michael-4443/customer-app.*|image: $REGISTRY/customer-app:$TAG|g" k8s/deployment.yaml
+sed -i.bak "s|image: registry.cloudraya.com/ir-cr-michael-4443/customer-app.*|image: $REGISTRY/customer-app:$TAG|g" k8s/deployment-with-pvc.yaml
 
 # Update image reference in skaffold.yaml
-sed -i.bak "s|image: registry.cloudraya.com/ir-cr-hendi-144/customer-app|image: $REGISTRY/customer-app|g" skaffold.yaml
+sed -i.bak "s|image: registry.cloudraya.com/ir-cr-michael-4443/customer-app|image: $REGISTRY/customer-app|g" skaffold.yaml
 
 # Update image reference in pom.xml
-sed -i.bak "s|<image>registry.cloudraya.com/ir-cr-hendi-144/customer-app</image>|<image>$REGISTRY/customer-app</image>|g" pom.xml
+sed -i.bak "s|<image>registry.cloudraya.com/ir-cr-michael-4443/customer-app</image>|<image>$REGISTRY/customer-app</image>|g" pom.xml
 
 # Build and push the image if not skipped
 if [ "$SKIP_BUILD" = false ]; then
